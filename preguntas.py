@@ -246,7 +246,7 @@ def pregunta_09():
     """
     _,keys=busqueda('jjj')
    
-    return  sorted([(dato,len(busqueda(dato)[0])) for dato in keys])
+    return  dict(sorted([(dato,len(busqueda(dato)[0])) for dato in keys]))
 
 
 def pregunta_10():
