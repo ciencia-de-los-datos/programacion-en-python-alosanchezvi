@@ -18,6 +18,12 @@ Data01=[dato.replace('\n','') for dato in Data]
 # separar los componentes de cada fila
 Data02=[dato.split('\t') for dato in Data01]
 
+def convert_dict(valor):
+    dicionario=dict([dato.split(":") for dato in valor.split(",")])
+    for k,v in dicionario.items():
+        dicionario[k]=int(dicionario[k])
+    return dicionario
+
 def pregunta_01():
     """
     Retorne la suma de la segunda columna.
