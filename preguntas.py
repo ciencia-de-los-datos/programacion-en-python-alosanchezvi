@@ -193,7 +193,7 @@ def pregunta_07():
     """
     columns_1=[dato[1] for dato in Data02]
     columns_01=[dato[:2] for dato in Data02]
-    return sorted([(dato,list(map( lambda x: x[0], list(filter(lambda x:  x[1]==dato,columns_01))))) for dato in list(set(columns_1))] )
+    return sorted([(int(dato),list(map( lambda x: x[0], list(filter(lambda x:  x[1]==dato,columns_01))))) for dato in list(set(columns_1))] )
 
 
 def pregunta_08():
@@ -221,7 +221,7 @@ def pregunta_08():
     columns_1=[dato[1] for dato in Data02]
     columns_01=[dato[:2] for dato in Data02]
 
-    return sorted([(dato,sorted(set(list(map( lambda x: x[0], list(filter(lambda x:  x[1]==dato,columns_01))))))) for dato in list(set(columns_1))] )
+    return sorted([(int(dato),sorted(set(list(map( lambda x: x[0], list(filter(lambda x:  x[1]==dato,columns_01))))))) for dato in list(set(columns_1))] )
 
 
 def pregunta_09():
