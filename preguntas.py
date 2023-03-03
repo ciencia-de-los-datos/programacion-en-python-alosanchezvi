@@ -126,6 +126,7 @@ def pregunta_05():
     ]
 
     """
+    columns_0=[dato[0] for dato in Data02]
     columns_01=[dato[:2] for dato in Data02]
     maximo=(lambda dato: max(list(map( lambda x: int(x[1]), list(filter(lambda x:  x[0]==dato,columns_01))))))
     minimo=(lambda dato: min(list(map( lambda x: int(x[1]), list(filter(lambda x:  x[0]==dato,columns_01))))))
