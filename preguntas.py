@@ -11,7 +11,18 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
+# Leer el archivo 
+Data = open("data.csv", "r").readlines()
+# quitar \n
+Data01=[dato.replace('\n','') for dato in Data]
+# separar los componentes de cada fila
+Data02=[dato.split('\t') for dato in Data01]
 
+def convert_dict(valor):
+    dicionario=dict([dato.split(":") for dato in valor.split(",")])
+    for k,v in dicionario.items():
+        dicionario[k]=int(dicionario[k])
+    return dicionario
 
 def pregunta_01():
     """
@@ -21,7 +32,17 @@ def pregunta_01():
     214
 
     """
-    return
+
+    #seleccionar y sumar la columna dos 
+    return sum([int(dato[1]) for dato in Data02])
+
+
+def conteo(lista):
+    return sorted([(dato,len(list(filter(lambda x: x==dato,lista )))) for dato in list(set(lista))])
+
+# pregunta_02
+
+
 
 
 def pregunta_02():
@@ -39,7 +60,8 @@ def pregunta_02():
     ]
 
     """
-    return
+    columns_0=[dato[0] for dato in Data02]
+    return conteo(columns_0)
 
 
 def pregunta_03():
@@ -57,7 +79,9 @@ def pregunta_03():
     ]
 
     """
-    return
+    columns_0=[dato[0] for dato in Data02]
+    columns_01=[dato[:2] for dato in Data02]
+    return sorted([(dato,sum(list(map( lambda x: int(x[1]), list(filter(lambda x:  x[0]==dato,columns_01)))))) for dato in list(set(columns_0))] )
 
 
 def pregunta_04():
@@ -82,7 +106,9 @@ def pregunta_04():
     ]
 
     """
-    return
+    columns_2=[dato[2] for dato in Data02]
+    mes=[dato[5:7] for dato in columns_2]
+    return conteo(mes)
 
 
 def pregunta_05():
@@ -100,8 +126,23 @@ def pregunta_05():
     ]
 
     """
-    return
+    columns_0=[dato[0] for dato in Data02]
+    columns_01=[dato[:2] for dato in Data02]
+    maximo=(lambda dato: max(list(map( lambda x: int(x[1]), list(filter(lambda x:  x[0]==dato,columns_01))))))
+    minimo=(lambda dato: min(list(map( lambda x: int(x[1]), list(filter(lambda x:  x[0]==dato,columns_01))))))
 
+    return sorted([(dato,maximo(dato),minimo(dato)) for dato in list(set(columns_0))] )
+
+columns_4=[convert_dict(dato[4]) for dato in Data02]
+def busqueda(valor):
+    lista_values=[]
+    lista_keys=[]
+    for diccionario in columns_4:
+            for keys,values in diccionario.items():
+                lista_keys.append(keys)
+                if keys==valor:
+                    lista_values.append(diccionario[keys])
+    return lista_values,list(set(lista_keys))     
 
 def pregunta_06():
     """
@@ -124,8 +165,9 @@ def pregunta_06():
         ("jjj", 5, 17),
     ]
 
-    """
-    return
+    """  
+    keys=busqueda('jjj')[1]
+    return sorted([(dato,min(busqueda(dato)[0]),max(busqueda(dato)[0])) for dato in keys])
 
 
 def pregunta_07():
@@ -149,7 +191,9 @@ def pregunta_07():
     ]
 
     """
-    return
+    columns_1=[dato[1] for dato in Data02]
+    columns_01=[dato[:2] for dato in Data02]
+    return sorted([(int(dato),list(map( lambda x: x[0], list(filter(lambda x:  x[1]==dato,columns_01))))) for dato in list(set(columns_1))] )
 
 
 def pregunta_08():
@@ -174,7 +218,10 @@ def pregunta_08():
     ]
 
     """
-    return
+    columns_1=[dato[1] for dato in Data02]
+    columns_01=[dato[:2] for dato in Data02]
+
+    return sorted([(int(dato),sorted(set(list(map( lambda x: x[0], list(filter(lambda x:  x[1]==dato,columns_01))))))) for dato in list(set(columns_1))] )
 
 
 def pregunta_09():
@@ -197,7 +244,9 @@ def pregunta_09():
     }
 
     """
-    return
+    _,keys=busqueda('jjj')
+   
+    return  dict(sorted([(dato,len(busqueda(dato)[0])) for dato in keys]))
 
 
 def pregunta_10():
@@ -218,7 +267,11 @@ def pregunta_10():
 
 
     """
-    return
+    columns_0=[dato[0] for dato in Data02]
+    columns_3=[dato[3] for dato in Data02]
+    columns_4=[convert_dict(dato[4]) for dato in Data02]
+ 
+    return [(dato01,len(dato03.split(',')),len(dato04)) for dato01,dato03,dato04 in zip(columns_0,columns_3,columns_4)]
 
 
 def pregunta_11():
@@ -239,7 +292,12 @@ def pregunta_11():
 
 
     """
-    return
+    columns_13=[dato[1::2] for dato in Data02]
+    valoresUnicos=[]
+    for dato in Data02:
+        valoresUnicos.extend(dato[3].split(','))
+    valoresUnicos=list(set(valoresUnicos)) 
+    return dict(sorted([(dato,sum(list(map( lambda x: int(x[0]), list(filter(lambda x: dato in  x[1].split(','),columns_13)))))) for dato in valoresUnicos] ))
 
 
 def pregunta_12():
@@ -257,4 +315,7 @@ def pregunta_12():
     }
 
     """
-    return
+    columns_0=[dato[0] for dato in Data02]
+    columns_4=[convert_dict(dato[4]) for dato in Data02]
+    sum_columna_4=[[dato01,sum(dato04.values())]for dato01,dato04 in zip(columns_0,columns_4)]
+    return dict(sorted([(dato,sum(list(map(lambda x: x[1], list(filter( lambda x : x[0]==dato,sum_columna_4 )))))) for dato in list(set(columns_0))]))
