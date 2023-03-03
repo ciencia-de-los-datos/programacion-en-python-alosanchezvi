@@ -245,7 +245,8 @@ def pregunta_09():
 
     """
     _,keys=busqueda('jjj')
-    return sorted([(dato,min(busqueda(dato)[0]),max(busqueda(dato)[0])) for dato in keys])
+   
+    return  sorted([(dato,len(busqueda(dato)[0])) for dato in keys])
 
 
 def pregunta_10():
@@ -266,10 +267,11 @@ def pregunta_10():
 
 
     """
+    columns_0=[dato[0] for dato in Data02]
     columns_3=[dato[3] for dato in Data02]
     columns_4=[convert_dict(dato[4]) for dato in Data02]
-
-    return [(len(dato03.split(',')),len(dato04)) for dato03,dato04 in zip(columns_3,columns_4)]
+ 
+    return [(dato01,len(dato03.split(',')),len(dato04)) for dato01,dato03,dato04 in zip(columns_0,columns_3,columns_4)]
 
 
 def pregunta_11():
