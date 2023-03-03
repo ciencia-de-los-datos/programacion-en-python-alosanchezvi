@@ -166,7 +166,7 @@ def pregunta_06():
     ]
 
     """  
-
+    keys=busqueda('jjj')[1]
     return sorted([(dato,min(busqueda(dato)[0]),max(busqueda(dato)[0])) for dato in keys])
 
 
