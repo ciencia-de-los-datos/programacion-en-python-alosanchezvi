@@ -12,7 +12,7 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 # Leer el archivo 
-Data = open("\data.csv", "r").readlines()
+Data = open("data.csv", "r").readlines()
 # quitar \n
 Data01=[dato.replace('\n','') for dato in Data]
 # separar los componentes de cada fila
